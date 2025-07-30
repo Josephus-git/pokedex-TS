@@ -1,4 +1,5 @@
 import { createInterface } from 'node:readline';
+import { getCommands } from './registry.js';
 
 export function cleanInput(input: string): string[] {
     const textList = input.toLowerCase().split(" ");
@@ -20,6 +21,9 @@ export function startREPL() {
     prompt: 'Pokedex > '
     });
 
+    // get commands
+    const commands = getCommands()
+
     // Display the initial prompt
     rl.prompt();
 
@@ -33,7 +37,13 @@ export function startREPL() {
             return;
         }
 
-        console.log(`Your command was: ${words[0]}`);
+        const commandName = words[0]
+        if (commands[commandName]) {
+            commands[commandName].callback(commands)
+        } else {
+            console.log("command not available");
+        }
+            
 
         // Re-prompt to allow for another command
         rl.prompt();
