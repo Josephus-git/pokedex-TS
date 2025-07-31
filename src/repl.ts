@@ -1,5 +1,4 @@
-import { createInterface } from 'node:readline';
-import { getCommands } from './registry.js';
+import { initState } from "./state.js";
 
 export function cleanInput(input: string): string[] {
     const textList = input.toLowerCase().split(" ");
@@ -14,15 +13,10 @@ export function cleanInput(input: string): string[] {
 }
 
 export function startREPL() {
-    // Create the readline interface
-    const rl = createInterface({ 
-    input: process.stdin,
-    output: process.stdout,
-    prompt: 'Pokedex > '
-    });
-
-    // get commands
-    const commands = getCommands()
+    const newState = initState()
+    const rl = newState.interface
+    const commands = newState.commands
+    
 
     // Display the initial prompt
     rl.prompt();
@@ -39,7 +33,7 @@ export function startREPL() {
 
         const commandName = words[0]
         if (commands[commandName]) {
-            commands[commandName].callback(commands)
+            commands[commandName].callback(newState)
         } else {
             console.log("command not available");
         }
