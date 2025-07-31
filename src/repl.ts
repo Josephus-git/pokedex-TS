@@ -12,17 +12,16 @@ export function cleanInput(input: string): string[] {
     return result
 }
 
-export function startREPL() {
+export async function startREPL() {
     const newState = initState()
     const rl = newState.interface
     const commands = newState.commands
     
-
     // Display the initial prompt
     rl.prompt();
 
     // Listen for line input
-    rl.on('line', (line:string) => {
+    rl.on('line', async (line:string) => {
         const words = cleanInput(line);
 
         if (words.length === 0) {
@@ -31,13 +30,17 @@ export function startREPL() {
             return;
         }
 
-        const commandName = words[0]
-        if (commands[commandName]) {
-            commands[commandName].callback(newState)
+        const commandName = words[0];
+        const command = commands[commandName];
+        if (command) {
+            try {
+                await command.callback(newState);
+            } catch (error) {
+                console.log(`something went wrong: ${error}`);
+            }
         } else {
             console.log("command not available");
         }
-            
 
         // Re-prompt to allow for another command
         rl.prompt();
