@@ -38,7 +38,7 @@ export class Cache {
   #startReapLoop(): void {
     this.#reapIntervalId = setInterval(() => {
       this.#reap();
-    }, 100 );
+    }, this.#interval);
   }
 
   stopReapLoop(): void {

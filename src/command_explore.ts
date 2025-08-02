@@ -4,7 +4,7 @@ import { Location } from './pokeapi.js';
 export async function commandExplore(state: State, ...args: string[]): Promise<void> {
     let location: Location;
     if (args.length === 0) {
-        console.log("invalid usage");
+        console.log("usage: explore <location>");
         return;
     }
     const locationName = args[0]

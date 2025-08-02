@@ -1,4 +1,4 @@
-
+import { PokemonDetails } from "./pokemonapi";
 
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
@@ -23,6 +23,16 @@ export class PokeAPI {
     }
     const json = await response.json();
     return json as Location;
+  }
+
+  async fetchPokemon(pokemonName: string) : Promise<PokemonDetails> {
+    const url = `${PokeAPI.baseURL}/pokemon/${pokemonName}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch pokemon ${pokemonName}: ${response.status}`)
+    }
+    const json = await response.json();
+    return json as PokemonDetails;
   }
 }
 
@@ -116,5 +126,4 @@ export interface Method {
   name: string
   url: string
 }
-
 
