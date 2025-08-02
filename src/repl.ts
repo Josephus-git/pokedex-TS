@@ -34,7 +34,7 @@ export async function startREPL() {
         const command = commands[commandName];
         if (command) {
             try {
-                await command.callback(newState);
+                await command.callback(newState, ...words.slice(1));
             } catch (error) {
                 console.log(`something went wrong: ${error}`);
             }

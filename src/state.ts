@@ -6,7 +6,7 @@ import { Cache } from "./pokecache.js";
 export type CLICommand = {
   name: string;
   description: string;
-  callback: (state: State) => Promise<void>;
+  callback: (state: State, ...args: string[]) => Promise<void>;
 };
 
 export type State = {
@@ -33,7 +33,7 @@ export function initState(): State {
         interface: rl,
         commands: commands,
         pokeAPI: new PokeAPI,
-        pokeCache: new Cache(1000 * 2),
+        pokeCache: new Cache(1000 * 180),
         nextLocationsURL: "",
         prevLocationsURL: "",
     }
