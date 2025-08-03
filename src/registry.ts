@@ -5,6 +5,8 @@ import { commandMapb } from './command_mapb.js';
 import { commandExplore } from './command_explore.js';
 import { commandCatch } from './command_catch.js';
 import { CLICommand } from './state.js';
+import { commandInspect } from './command_inspect.js';
+import { commandPokedex } from './command_pokedex.js';
 
 
 export function getCommands(): Record<string, CLICommand> {
@@ -38,6 +40,16 @@ export function getCommands(): Record<string, CLICommand> {
       name: "catch",
       description: "Catches the selected pokemon depending on ease of catching the pokemon",
       callback: commandCatch,
+    },
+    inspect: {
+      name: "inspect",
+      description: "inspects a caught pokemon",
+      callback: commandInspect,
+    },
+    pokedex: {
+      name: "pokedex",
+      description: "displays a list of all caught pokemon",
+      callback: commandPokedex,
     },
     // can add more commands here
   };

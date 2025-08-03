@@ -9,12 +9,11 @@ export async function commandCatch(state: State, ...args: string[]): Promise<voi
     }
     const pokemonName = args[0];
     console.log(`Throwing a Pokeball at ${pokemonName}...`)
-    const cachedPokemon = state.pokeCache.get<PokemonDetails>(pokemonName);
-    if (cachedPokemon) {
-        pokemon = cachedPokemon;
+    const caughtPokemon = state.pokedex.get(pokemonName);
+    if (caughtPokemon) {
+        pokemon = caughtPokemon;
     } else {
         pokemon = await state.pokeAPI.fetchPokemon(pokemonName);
-        state.pokeCache.add(pokemonName, pokemon);
     }
     const chance = Math.random() * pokemon.base_experience
     
